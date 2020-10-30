@@ -16,33 +16,45 @@ namespace GraphQL.Conventions
             {
                 _cache[key] = value;
             }
+
             return value;
         }
 
         public TValue GetOrAddEntity(TKey key, Func<TValue> valueGenerator)
         {
-            TValue value;
             lock (_lock)
             {
-                if (!_cache.TryGetValue(key, out value))
+                if (!_cache.TryGetValue(key, out var value))
                 {
                     value = _cache[key] = valueGenerator();
                 }
+
                 return value;
             }
         }
 
         public TValue GetEntity(TKey key)
         {
-            TValue value;
             lock (_lock)
+                return _cache.TryGetValue(key, out var value) ? value : default;
+        }
+
+        public IEnumerable<string> Keys
+        {
+            get
             {
-                return _cache.TryGetValue(key, out value) ? value : default;
+                lock (_lock)
+                    return _cache.Keys.Select(k => k.ToString()).ToArray();
             }
         }
 
-        public IEnumerable<string> Keys => _cache.Keys.Select(k => k.ToString()).ToArray();
-
-        public IEnumerable<TValue> Entities => _cache.Values;
+        public IEnumerable<TValue> Entities
+        {
+            get
+            {
+                lock (_lock)
+                    return _cache.Values;
+            }
+        }
     }
 }

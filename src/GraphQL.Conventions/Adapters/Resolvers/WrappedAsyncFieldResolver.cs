@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using GraphQL.Conventions.Attributes.Execution.Unwrappers;
-using GraphQL.Conventions.Attributes.Execution.Wrappers;
 using GraphQL.Conventions.Handlers;
 using GraphQL.Conventions.Relay;
 using GraphQL.Conventions.Types.Descriptors;
@@ -18,8 +17,6 @@ namespace GraphQL.Conventions.Adapters
     {
         private static readonly ExecutionFilterAttributeHandler ExecutionFilterHandler =
             new ExecutionFilterAttributeHandler();
-
-        private static readonly IWrapper Wrapper = new ValueWrapper();
 
         private static readonly IUnwrapper Unwrapper = new ValueUnwrapper();
 

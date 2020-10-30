@@ -13,10 +13,10 @@ namespace GraphQL.Conventions
         public static NonNull<string> NonNull(string str) => str;
 
         public static Id Id<T>(string unencodedIdentifier, bool serializeUsingColon = true) =>
-            GraphQL.Conventions.Id.New<T>(unencodedIdentifier, serializeUsingColon);
+            Conventions.Id.New<T>(unencodedIdentifier, serializeUsingColon);
 
         public static Cursor Cursor<T>(string unencodedIdentifier, bool serializeUsingColon = true) =>
-            GraphQL.Conventions.Relay.Cursor.New<T>(unencodedIdentifier, serializeUsingColon);
+            Relay.Cursor.New<T>(unencodedIdentifier, serializeUsingColon);
 
         public static Id Id(string encodedIdentifier) => (Id)encodedIdentifier;
 

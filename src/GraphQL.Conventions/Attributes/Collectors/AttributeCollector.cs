@@ -5,12 +5,13 @@ using System.Reflection;
 
 namespace GraphQL.Conventions.Attributes.Collectors
 {
-    public class AttributeCollector<TAttribute>
+    public sealed class AttributeCollector<TAttribute>
         where TAttribute : IAttribute
     {
         class WrappedAttribute : IComparable<WrappedAttribute>
         {
-            private static long _currentIndex = 0;
+            // ReSharper disable once StaticMemberInGenericType
+            private static long _currentIndex;
 
             public WrappedAttribute(TAttribute attribute)
             {
@@ -37,7 +38,7 @@ namespace GraphQL.Conventions.Attributes.Collectors
                 }
                 if (Attribute.ApplicationOrder != other.Attribute.ApplicationOrder)
                 {
-                    return (int)(Attribute.ApplicationOrder - other.Attribute.ApplicationOrder);
+                    return Attribute.ApplicationOrder - other.Attribute.ApplicationOrder;
                 }
                 return (int)(InternalOrder - other.InternalOrder);
             }
@@ -58,7 +59,7 @@ namespace GraphQL.Conventions.Attributes.Collectors
                 .ToList();
         }
 
-        protected void AddDefaultAttributes(params TAttribute[] defaultAttributes)
+        private void AddDefaultAttributes(params TAttribute[] defaultAttributes)
         {
             if (_defaultAttributes == null)
             {
@@ -67,7 +68,7 @@ namespace GraphQL.Conventions.Attributes.Collectors
             _defaultAttributes.AddRange(defaultAttributes.Except(_defaultAttributes));
         }
 
-        protected virtual IEnumerable<TAttribute> CollectCoreAttributes(ICustomAttributeProvider obj)
+        private static IEnumerable<TAttribute> CollectCoreAttributes(ICustomAttributeProvider _)
         {
             return new TAttribute[0];
         }

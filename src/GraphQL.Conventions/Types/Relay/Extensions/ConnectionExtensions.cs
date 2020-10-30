@@ -74,6 +74,7 @@ namespace GraphQL.Conventions.Relay
             };
         }
 
+        // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
         private static void ValidateParameters(int? first, Cursor? after, int? last, Cursor? before)
         {
             if (first.HasValue && last.HasValue)
@@ -96,6 +97,7 @@ namespace GraphQL.Conventions.Relay
                 throw new ArgumentException("Cannot use `last` in conjunction with `after`.");
             }
         }
+        // ReSharper restore ParameterOnlyUsedForPreconditionCheck.Local
 
         private class ConnectionImpl<TNode> : Connection<TNode>
         {

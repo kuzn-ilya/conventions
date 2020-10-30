@@ -44,17 +44,10 @@ namespace GraphQL.Conventions
 
         public static object RunTask(Delegate task, TypeInfo typeInfo)
         {
-            try
-            {
-                var asyncMethod = typeof(AsyncHelpers)
-                    .GetMethod(nameof(RunSync))
-                    .MakeGenericMethod(typeInfo.AsType());
-                return asyncMethod.Invoke(null, new object[] { task });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var asyncMethod = typeof(AsyncHelpers)
+                .GetMethod(nameof(RunSync))
+                ?.MakeGenericMethod(typeInfo.AsType());
+            return asyncMethod?.Invoke(null, new object[] { task });
         }
 
         private class ExclusiveSynchronizationContext : SynchronizationContext

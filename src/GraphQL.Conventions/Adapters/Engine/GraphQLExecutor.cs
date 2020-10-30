@@ -23,17 +23,17 @@ namespace GraphQL.Conventions
 
         private Inputs _inputs;
 
-        private CancellationToken _cancellationToken = default;
+        private CancellationToken _cancellationToken;
 
         private IDependencyInjector _dependencyInjector;
 
         private bool _enableValidation = true;
 
-        private bool _enableProfiling = false;
+        private bool _enableProfiling;
 
-        private IEnumerable<IValidationRule> _validationRules = null;
+        private IEnumerable<IValidationRule> _validationRules;
 
-        private ComplexityConfiguration _complexityConfiguration = null;
+        private ComplexityConfiguration _complexityConfiguration;
 
         private IEnumerable<IDocumentExecutionListener> _documentExecutionListeners;
 

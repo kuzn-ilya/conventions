@@ -7,7 +7,7 @@ namespace GraphQL.Conventions.Relay
     public struct Cursor
         : IComparable, IComparable<Cursor>, IEquatable<Cursor>
     {
-        private readonly Id _id;
+        private Id _id;
 
         private Cursor(Type type, string value, bool? serializeUsingColon = null)
         {
@@ -20,18 +20,19 @@ namespace GraphQL.Conventions.Relay
         }
 
         public override bool Equals(object obj) =>
-            obj is Cursor ? Equals((Cursor)obj) : false;
+            obj is Cursor cursor && Equals(cursor);
 
         public bool Equals(Cursor other) =>
             _id.Equals(other._id);
 
         public int CompareTo(object other) =>
-            other is Cursor ? CompareTo((Cursor)other) : -1;
+            other is Cursor cursor ? CompareTo(cursor) : -1;
 
         public int CompareTo(Cursor other) =>
             _id.CompareTo(other._id);
 
         public override int GetHashCode() =>
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
             _id.GetHashCode();
 
         public override string ToString() =>
@@ -59,8 +60,7 @@ namespace GraphQL.Conventions.Relay
 
         public int? IntegerForCursor<TType>()
         {
-            int intVal;
-            return int.TryParse(CursorForType(typeof(TType)), out intVal) ? intVal : (int?)null;
+            return int.TryParse(CursorForType(typeof(TType)), out var intVal) ? intVal : (int?)null;
         }
 
         public long? LongForCursor<TType>()

@@ -8,7 +8,7 @@ namespace GraphQL.Conventions
     {
         public static bool SerializeUsingColon { get; set; } = true;
 
-        private readonly static INameNormalizer _normalizer = new NameNormalizer();
+        private static readonly INameNormalizer Normalizer = new NameNormalizer();
 
         internal readonly string _unencodedIdentifier;
 
@@ -133,6 +133,6 @@ namespace GraphQL.Conventions
             id1.CompareTo(id2) >= 0;
 
         internal static string GetTypeName(Type type) =>
-            _normalizer.AsTypeName(type.Name);
+            Normalizer.AsTypeName(type.Name);
     }
 }

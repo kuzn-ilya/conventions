@@ -1,7 +1,10 @@
+// ReSharper disable UnusedTypeParameter
+// ReSharper disable UnusedType.Global
 namespace GraphQL.Conventions
 {
     public abstract class Union
     {
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public object Instance { get; set; }
     }
 
